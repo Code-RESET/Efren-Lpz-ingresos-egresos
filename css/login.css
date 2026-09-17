@@ -20,6 +20,13 @@
   text-align: center;
 }
 
+.login-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-5);
+}
+
 .login-back {
   display: inline-flex;
   align-items: center;
@@ -27,7 +34,6 @@
   color: var(--text-dim);
   font-size: 0.82rem;
   font-weight: 600;
-  margin-bottom: var(--space-5);
   text-decoration: none;
 }
 
@@ -73,40 +79,25 @@
   margin-top: var(--space-6);
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
-  line-height: 1.5;
-}
-
-.login-signature {
   display: flex;
   align-items: center;
-  gap: 10px;
-  text-align: left;
+  justify-content: center;
+  gap: 6px;
+  opacity: 0.6;
 }
 
 .login-signature-badge {
-  width: 30px;
-  height: 30px;
-  border-radius: 8px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   flex-shrink: 0;
 }
 
-.login-signature p {
-  margin: 0;
-  font-size: 0.76rem;
-  color: var(--text-dim);
+.login-signature-text {
+  font-size: 0.64rem;
+  color: var(--text-faint);
+  letter-spacing: 0.01em;
 }
-
-.login-signature strong {
-  color: var(--text);
-}
-
-.login-signature-dev {
-  font-size: 0.66rem !important;
-  color: var(--text-faint) !important;
-  margin-top: 2px !important;
-}
-
-.login-footer strong { color: var(--text-dim); }
 
 .spinner {
   width: 16px;

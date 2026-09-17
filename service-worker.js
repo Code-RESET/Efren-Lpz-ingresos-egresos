@@ -9,7 +9,7 @@
 // instalados.
 // ============================================================
 
-const CACHE_VERSION = "medicar-v3";
+const CACHE_VERSION = "medicar-v4";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -36,6 +36,7 @@ const CORE_ASSETS = [
   "./js/utils/modal.js",
   "./js/utils/toast.js",
   "./js/utils/xlsx-export.js",
+  "./js/utils/theme.js",
   "./js/modules/dashboard.js",
   "./js/modules/ingresos.js",
   "./js/modules/egresos.js",

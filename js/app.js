@@ -16,6 +16,7 @@ import { createDemoRepo } from "./data/demo-repo.js";
 import { appState } from "./state.js";
 import { maybeStartTour, restartTour } from "./modules/demo-tour.js";
 import { downloadBackup } from "./utils/xlsx-export.js";
+import { initThemeToggle } from "./utils/theme.js";
 
 let authModPromise = null;
 function loadAuth() {
@@ -27,6 +28,8 @@ function loadAuth() {
 document.querySelectorAll("[data-icon]").forEach((el) => {
   el.innerHTML = icon(el.dataset.icon);
 });
+
+initThemeToggle();
 
 const screens = {
   landing: document.getElementById("landing-screen"),

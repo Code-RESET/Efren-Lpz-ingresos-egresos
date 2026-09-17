@@ -6,6 +6,17 @@
 <title>Medicar — Control financiero</title>
 <meta name="description" content="Control financiero personal Medicar: ingresos, egresos y métricas, siempre claros." />
 
+<!-- Aplica el tema guardado ANTES del primer paint, para evitar el
+     parpadeo claro/oscuro al cargar (ver js/utils/theme.js). -->
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem("medicar-theme");
+      if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+    } catch (e) {}
+  })();
+</script>
+
 <!-- PWA -->
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
@@ -37,7 +48,12 @@
       <img src="assets/logo-mark.png" alt="Medicar" />
       <span>Medicar</span>
     </div>
-    <button id="landing-login-btn" class="btn btn-secondary btn-sm">Iniciar sesión</button>
+    <div class="u-flex u-gap-2">
+      <button type="button" class="btn-icon" data-theme-toggle aria-label="Cambiar tema" title="Cambiar tema">
+        <span class="theme-toggle-icon"></span>
+      </button>
+      <button id="landing-login-btn" class="btn btn-secondary btn-sm">Iniciar sesión</button>
+    </div>
   </nav>
 
   <div class="landing-hero">
@@ -79,7 +95,12 @@
 <!-- ===================== LOGIN ===================== -->
 <section id="login-screen" class="screen hidden-screen">
   <div class="login-card card">
-    <a href="#" id="login-back" class="login-back"><span data-icon="arrowLeft"></span> Volver</a>
+    <div class="login-top-row">
+      <a href="#" id="login-back" class="login-back"><span data-icon="arrowLeft"></span> Volver</a>
+      <button type="button" class="btn-icon" data-theme-toggle aria-label="Cambiar tema" title="Cambiar tema">
+        <span class="theme-toggle-icon"></span>
+      </button>
+    </div>
     <img src="assets/logo-mark.png" alt="Medicar" class="login-logo" />
     <h1 class="login-title">Medicar</h1>
     <p class="login-subtitle">Control financiero personal</p>
@@ -104,13 +125,8 @@
     </form>
 
     <footer class="login-footer">
-      <div class="login-signature">
-        <img src="assets/code-reset-badge.png" alt="Code-Reset" class="login-signature-badge" />
-        <div>
-          <p>Compañía: <strong>CODE-RESET</strong></p>
-          <p class="login-signature-dev">Desarrollado por Ing. Luis Ángel Díaz Bernal</p>
-        </div>
-      </div>
+      <img src="assets/code-reset-badge.png" alt="Code-Reset" class="login-signature-badge" />
+      <span class="login-signature-text">CODE-RESET · Ing. Luis Ángel Díaz Bernal</span>
     </footer>
   </div>
 </section>
@@ -127,6 +143,9 @@
 
     <button type="button" id="backup-btn-sidebar" class="sidebar-action-btn">
       <span data-icon="download"></span><span>Descargar respaldo</span>
+    </button>
+    <button type="button" id="theme-toggle-sidebar" class="sidebar-action-btn" data-theme-toggle>
+      <span class="theme-toggle-icon"></span><span class="theme-toggle-label">Modo oscuro</span>
     </button>
 
     <div class="sidebar-footer">
@@ -147,6 +166,9 @@
         <span>Medicar</span>
       </div>
       <div class="header-actions">
+        <button type="button" class="btn-icon" data-theme-toggle aria-label="Cambiar tema" title="Cambiar tema">
+          <span class="theme-toggle-icon"></span>
+        </button>
         <button id="backup-btn-header" class="btn-icon" title="Descargar respaldo" aria-label="Descargar respaldo">
           <span data-icon="download"></span>
         </button>

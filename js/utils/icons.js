@@ -30,6 +30,8 @@ export const icons = {
   check: wrap(`<path d="M20 6 9 17l-5-5"/>`),
   arrowLeft: wrap(`<path d="M19 12H5M12 19l-7-7 7-7"/>`),
   download: wrap(`<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>`),
+  sun: wrap(`<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.9 4.9l1.7 1.7M17.4 17.4l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.9 19.1l1.7-1.7M17.4 6.6l1.7-1.7"/>`),
+  moon: wrap(`<path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.6 6.6 0 0 0 10.5 10.5Z"/>`),
 };
 
 export function icon(name) {
