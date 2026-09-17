@@ -73,9 +73,37 @@
   margin-top: var(--space-6);
   padding-top: var(--space-4);
   border-top: 1px solid var(--border);
-  font-size: 0.72rem;
-  color: var(--text-faint);
-  line-height: 1.6;
+  line-height: 1.5;
+}
+
+.login-signature {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: left;
+}
+
+.login-signature-badge {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.login-signature p {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--text-dim);
+}
+
+.login-signature strong {
+  color: var(--text);
+}
+
+.login-signature-dev {
+  font-size: 0.66rem !important;
+  color: var(--text-faint) !important;
+  margin-top: 2px !important;
 }
 
 .login-footer strong { color: var(--text-dim); }
