@@ -154,9 +154,9 @@
   }
   .box-nota { background: rgba(79, 163, 247, 0.08); border-color: var(--blue); }
   .box-importante { background: rgba(255, 138, 61, 0.1); border-color: var(--orange); }
-  .box strong { display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; }
-  .box-nota strong { color: var(--blue); }
-  .box-importante strong { color: #d9701f; }
+  .box > strong:first-child { display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; }
+  .box-nota > strong:first-child { color: var(--blue); }
+  .box-importante > strong:first-child { color: #d9701f; }
 
   .card-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 18px 0; }
   @media (min-width: 600px) { .card-row { grid-template-columns: 1fr 1fr; } }
@@ -222,6 +222,31 @@
   table.schema { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 14px 0; }
   table.schema th, table.schema td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
   table.schema th { color: var(--text-dim); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+
+  .screenshot-row {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0 4px;
+  }
+  .screenshot-row figure {
+    margin: 0;
+    max-width: 260px;
+  }
+  .screenshot-row img {
+    width: 100%;
+    display: block;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  }
+  .screenshot-row figcaption {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--text-dim);
+  }
 </style>
 </head>
 <body>
@@ -261,6 +286,12 @@
       <strong>Importante</strong>
       No compartas tu correo y contraseña con nadie. Si crees que alguien más los tiene, avísale a Code-Reset para cambiarlos.
     </div>
+    <div class="screenshot-row">
+      <figure>
+        <img src="assets/manual/pantalla-login.png" alt="Pantalla de inicio de sesión de Medicar" />
+        <figcaption>Pantalla de inicio de sesión</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="block" id="instalar">
@@ -295,6 +326,12 @@
       <strong>Nota</strong>
       El <em>balance del mes</em> se calcula como ingresos menos <strong>todos</strong> los gastos del mes — los ya pagados y los pendientes. Así ves tu realidad financiera completa, no solo lo que ya saliste a pagar.
     </div>
+    <div class="screenshot-row">
+      <figure>
+        <img src="assets/manual/pantalla-inicio.png" alt="Dashboard de Medicar con tarjetas de resumen, comparativa mes a mes y desglose por categoría" />
+        <figcaption>Inicio: resumen, comparativa mes a mes y categorías</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="block" id="ingresos">
@@ -314,6 +351,12 @@
       <tr><td>Fecha de percepción</td><td>Cuándo lo recibiste</td></tr>
       <tr><td>Forma de recepción</td><td>Efectivo, Depósito, Transferencia...</td></tr>
     </table>
+    <div class="screenshot-row">
+      <figure>
+        <img src="assets/manual/pantalla-ingresos.png" alt="Lista de ingresos en Medicar" />
+        <figcaption>Lista de ingresos del mes</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="block" id="egresos">
@@ -330,6 +373,16 @@
       <strong>Nota</strong>
       Los gastos se ordenan automáticamente por fecha de vencimiento — el más próximo a vencer siempre aparece primero.
     </div>
+    <div class="screenshot-row">
+      <figure>
+        <img src="assets/manual/pantalla-egresos.png" alt="Lista de egresos en Medicar, con filtros Todos, Pendientes y Pagados" />
+        <figcaption>Lista de egresos, con filtro por estado</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/manual/formulario-egreso.png" alt="Formulario para agregar un nuevo egreso" />
+        <figcaption>Formulario para agregar o editar un gasto</figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="block" id="demo">
@@ -338,6 +391,12 @@
     <div class="box box-importante">
       <strong>Importante</strong>
       Los cambios que hagas en el modo demo (agregar, editar, borrar) no se guardan de forma permanente — se pierden al cerrar o recargar la página. Es solo para explorar la app sin riesgo.
+    </div>
+    <div class="screenshot-row">
+      <figure>
+        <img src="assets/manual/demo-bienvenida.png" alt="Pantalla de bienvenida del tour guiado en el modo demo" />
+        <figcaption>Bienvenida del tour guiado en el modo demo</figcaption>
+      </figure>
     </div>
   </section>
 
