@@ -57,7 +57,7 @@ function showWelcome() {
       <div class="tour-welcome-card card">
         <div class="feature-icon" style="margin:0 auto 16px;">${icon("bolt")}</div>
         <h2>Bienvenido a la demo de Medicar</h2>
-        <p>Un recorrido rápido con datos de muestra para ver cómo se vería la app en tu consultorio. Toma menos de un minuto.</p>
+        <p>Un recorrido rápido con datos de muestra para ver cómo se vería tu control financiero personal. Toma menos de un minuto.</p>
         <div class="u-flex u-gap-3" style="justify-content:center;">
           <button type="button" class="btn btn-secondary" id="tour-skip">Explorar por mi cuenta</button>
           <button type="button" class="btn btn-primary" id="tour-start">Comenzar tour</button>

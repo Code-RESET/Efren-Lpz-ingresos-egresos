@@ -1,6 +1,6 @@
 # Medicar — Control financiero
 
-PWA de control financiero para el consultorio Medicar (Efrén López). Ingresos,
+PWA de control financiero personal de Efrén López (Medicar). Ingresos,
 egresos y métricas, en HTML + CSS + JS puro (sin build step), Firebase
 (Auth + Firestore) y despliegue en GitHub Pages.
 

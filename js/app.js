@@ -15,6 +15,7 @@ import { initRouter, stopRouter } from "./router.js";
 import { createDemoRepo } from "./data/demo-repo.js";
 import { appState } from "./state.js";
 import { maybeStartTour, restartTour } from "./modules/demo-tour.js";
+import { downloadBackup } from "./utils/xlsx-export.js";
 
 let authModPromise = null;
 function loadAuth() {
@@ -126,6 +127,13 @@ async function handleLogout() {
 }
 document.getElementById("logout-btn-sidebar")?.addEventListener("click", handleLogout);
 document.getElementById("logout-btn-header")?.addEventListener("click", handleLogout);
+
+// ---------- Respaldo en Excel ----------
+function handleBackup() {
+  if (appState.repo) downloadBackup(appState.repo);
+}
+document.getElementById("backup-btn-sidebar")?.addEventListener("click", handleBackup);
+document.getElementById("backup-btn-header")?.addEventListener("click", handleBackup);
 
 // ---------- Identidad del usuario en el sidebar ----------
 function paintUser(user) {

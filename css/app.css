@@ -64,6 +64,31 @@
   background: rgba(10, 132, 255, 0.12);
 }
 
+.sidebar-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-align: left;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.sidebar-action-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.sidebar-action-btn:hover { background: var(--border); color: var(--text); }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .sidebar-footer {
   border-top: 1px solid var(--border);
   padding-top: var(--space-4);

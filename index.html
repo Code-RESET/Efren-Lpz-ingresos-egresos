@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
 <title>Medicar — Control financiero</title>
-<meta name="description" content="Control financiero del consultorio Medicar: ingresos, egresos y métricas, siempre claros." />
+<meta name="description" content="Control financiero personal Medicar: ingresos, egresos y métricas, siempre claros." />
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json" />
@@ -41,11 +41,11 @@
   </nav>
 
   <div class="landing-hero">
-    <span class="landing-eyebrow">Control financiero para tu consultorio</span>
+    <span class="landing-eyebrow">Control financiero personal</span>
     <h1>Tus <span>ingresos y gastos</span>, siempre claros.</h1>
     <p>
-      Medicar es la app privada de Efrén López para llevar el control financiero del
-      consultorio y del hogar en un solo lugar: qué entra, qué sale y cuánto queda cada mes.
+      Medicar es la app privada de Efrén López para llevar su control financiero
+      personal en un solo lugar: qué entra, qué sale y cuánto queda cada mes.
     </p>
     <div class="landing-actions">
       <button id="landing-login-btn-2" class="btn btn-primary">Iniciar sesión</button>
@@ -82,7 +82,7 @@
     <a href="#" id="login-back" class="login-back"><span data-icon="arrowLeft"></span> Volver</a>
     <img src="assets/logo-mark.png" alt="Medicar" class="login-logo" />
     <h1 class="login-title">Medicar</h1>
-    <p class="login-subtitle">Control financiero del consultorio</p>
+    <p class="login-subtitle">Control financiero personal</p>
 
     <form id="login-form" novalidate autocomplete="off">
       <label class="field">
@@ -125,6 +125,10 @@
 
     <nav id="sidebar-nav" class="app-nav"></nav>
 
+    <button type="button" id="backup-btn-sidebar" class="sidebar-action-btn">
+      <span data-icon="download"></span><span>Descargar respaldo</span>
+    </button>
+
     <div class="sidebar-footer">
       <div class="user-avatar" id="user-avatar">?</div>
       <span class="user-email" id="user-email-sidebar"></span>
@@ -142,9 +146,14 @@
         <img src="assets/logo-mark.png" alt="Medicar" />
         <span>Medicar</span>
       </div>
-      <button id="logout-btn-header" class="btn-icon" title="Salir" aria-label="Salir">
-        <span data-icon="logout"></span>
-      </button>
+      <div class="header-actions">
+        <button id="backup-btn-header" class="btn-icon" title="Descargar respaldo" aria-label="Descargar respaldo">
+          <span data-icon="download"></span>
+        </button>
+        <button id="logout-btn-header" class="btn-icon" title="Salir" aria-label="Salir">
+          <span data-icon="logout"></span>
+        </button>
+      </div>
     </header>
 
     <main id="app-content" class="app-content"></main>
@@ -156,6 +165,7 @@
 <div id="tour-root"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script type="module" src="js/app.js"></script>
 
 <script>

@@ -29,6 +29,7 @@ export const icons = {
   x: wrap(`<path d="M18 6 6 18M6 6l12 12"/>`),
   check: wrap(`<path d="M20 6 9 17l-5-5"/>`),
   arrowLeft: wrap(`<path d="M19 12H5M12 19l-7-7 7-7"/>`),
+  download: wrap(`<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/>`),
 };
 
 export function icon(name) {

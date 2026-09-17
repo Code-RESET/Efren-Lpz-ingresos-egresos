@@ -1,7 +1,7 @@
 {
   "name": "Medicar — Control financiero",
   "short_name": "Medicar",
-  "description": "Control financiero del consultorio Medicar: ingresos, egresos y métricas.",
+  "description": "Control financiero personal Medicar: ingresos, egresos y métricas.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
