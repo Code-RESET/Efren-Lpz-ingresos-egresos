@@ -5,7 +5,7 @@
 // formaRecepcion, notas.
 // ============================================================
 
-import { formatCurrency, formatDate, monthKey, monthLabel, shiftMonthKey } from "../utils/format.js";
+import { formatCurrency, formatDate, monthKey, monthLabel, shiftMonthKey, toDate } from "../utils/format.js";
 import { icon } from "../utils/icons.js";
 import { openModal } from "../utils/modal.js";
 import { showToast } from "../utils/toast.js";
@@ -193,7 +193,7 @@ export function renderIngresos(container, ctx) {
 }
 
 function toInputDate(date) {
-  const d = date instanceof Date ? date : new Date(date);
+  const d = toDate(date) || new Date();
   const offset = d.getTimezoneOffset();
   const local = new Date(d.getTime() - offset * 60000);
   return local.toISOString().slice(0, 10);

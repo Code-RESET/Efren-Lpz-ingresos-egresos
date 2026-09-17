@@ -141,7 +141,11 @@ export function renderDashboard(container, ctx) {
       .filter(Boolean)
       .sort();
 
-    const labels = months.map((m) => monthLabel(m).replace(/ de /, " '").slice(0, -2));
+    const labels = months.map((m) => {
+      const [year, month] = m.split("-").map(Number);
+      const monthName = new Date(year, month - 1, 1).toLocaleDateString("es-MX", { month: "short" });
+      return `${monthName} '${String(year).slice(-2)}`;
+    });
     const ingresosData = months.map((m) => sum(ingresos.filter((r) => monthKey(r.fechaPercepcion) === m), "monto"));
     const gastosData = months.map((m) => sum(egresos.filter((r) => monthKey(r.fechaVencimiento) === m), "monto"));
 
