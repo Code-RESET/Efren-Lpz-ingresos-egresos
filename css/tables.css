@@ -1,0 +1,128 @@
+/* ============================================================
+   tables.css — listas de Ingresos / Egresos
+   ============================================================ */
+
+.list-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-4);
+}
+
+.record-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.record-row {
+  padding: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.record-row:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.record-row:active { transform: scale(0.995); }
+
+.record-status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.record-status-dot.paid { background: var(--success); }
+.record-status-dot.pending { background: var(--accent-2); }
+
+.record-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.record-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+  margin-top: 2px;
+}
+
+.record-meta .dot-sep::before { content: "·"; margin: 0 2px; }
+
+.record-amount {
+  font-weight: 700;
+  font-size: 1.02rem;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.record-amount.income { color: var(--success); }
+
+.record-chevron {
+  color: var(--text-faint);
+  flex-shrink: 0;
+}
+
+.fab {
+  position: fixed;
+  right: calc(env(safe-area-inset-right, 0px) + 20px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 88px);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 26px rgba(10, 132, 255, 0.4);
+  z-index: 30;
+  transition: transform var(--dur-fast) var(--ease-spring);
+}
+.fab:active { transform: scale(0.92); }
+
+@media (min-width: 900px) {
+  .fab { bottom: calc(env(safe-area-inset-bottom, 0px) + 32px); }
+}
+
+.segmented {
+  display: inline-flex;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 3px;
+  gap: 2px;
+}
+
+.segmented button {
+  background: transparent;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-dim);
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.segmented button.active {
+  background: var(--accent);
+  color: #fff;
+}

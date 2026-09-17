@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manual de Usuario — Medicar</title>
+<link rel="icon" href="assets/favicon-32.png" />
+<style>
+  :root {
+    --dark: #0b0b10;
+    --dark-2: #161622;
+    --orange: #ff8a3d;
+    --blue: #4fa3f7;
+    --text: #1d1d1f;
+    --text-dim: #6e6e73;
+    --bg: #f7f7f9;
+    --card: #ffffff;
+    --border: #e6e6ea;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: var(--blue); }
+
+  header.manual-header {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 55%, #1d2a4a 100%);
+    color: #fff;
+    padding: 56px 24px 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header.manual-header::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(79, 163, 247, 0.25), transparent 60%);
+  }
+  header.manual-header img {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  header.manual-header h1 {
+    margin: 0 0 8px;
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+    position: relative;
+  }
+  header.manual-header p {
+    margin: 0;
+    color: #c8c8d4;
+    font-size: 1.05rem;
+    position: relative;
+  }
+  .header-badge {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 6px 16px;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--orange), #ffb066);
+    color: #1d1d1f;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+
+  nav.toc {
+    max-width: 760px;
+    margin: -32px auto 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    padding: 20px 24px;
+    position: relative;
+    z-index: 2;
+  }
+  nav.toc h2 { margin: 0 0 10px; font-size: 0.95rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.04em; }
+  nav.toc ol { margin: 0; padding-left: 20px; columns: 2; gap: 24px; }
+  nav.toc li { margin-bottom: 6px; font-size: 0.92rem; }
+  nav.toc a { text-decoration: none; color: var(--text); font-weight: 600; }
+  nav.toc a:hover { color: var(--blue); }
+
+  main { max-width: 760px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  section.block { margin-bottom: 52px; }
+  section.block h2 {
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  section.block .section-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), #7fc4ff);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  section.block > p.lead { color: var(--text-dim); margin: 0 0 20px; }
+
+  ol.steps { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+  ol.steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 4px 0 20px 44px;
+    border-left: 2px solid var(--border);
+    margin-left: 15px;
+  }
+  ol.steps li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  ol.steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: -17px;
+    top: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(255, 138, 61, 0.35);
+  }
+  ol.steps strong { display: block; margin-bottom: 2px; }
+  ol.steps span.step-detail { color: var(--text-dim); font-size: 0.92rem; }
+
+  .box {
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 18px 0;
+    font-size: 0.92rem;
+    border-left: 4px solid;
+  }
+  .box-nota { background: rgba(79, 163, 247, 0.08); border-color: var(--blue); }
+  .box-importante { background: rgba(255, 138, 61, 0.1); border-color: var(--orange); }
+  .box strong { display: block; margin-bottom: 4px; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.05em; }
+  .box-nota strong { color: var(--blue); }
+  .box-importante strong { color: #d9701f; }
+
+  .card-row { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 18px 0; }
+  @media (min-width: 600px) { .card-row { grid-template-columns: 1fr 1fr; } }
+  .mini-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+  }
+  .mini-card h3 { margin: 0 0 6px; font-size: 0.98rem; }
+  .mini-card p { margin: 0; color: var(--text-dim); font-size: 0.88rem; }
+
+  details.faq {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+  }
+  details.faq summary {
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.95rem;
+    list-style: none;
+  }
+  details.faq summary::-webkit-details-marker { display: none; }
+  details.faq summary::before {
+    content: "+";
+    display: inline-block;
+    width: 18px;
+    color: var(--orange);
+    font-weight: 900;
+  }
+  details.faq[open] summary::before { content: "–"; }
+  details.faq p { margin: 10px 0 0 28px; color: var(--text-dim); font-size: 0.9rem; }
+
+  .badge-status { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; }
+  .badge-status.pagado { background: rgba(48,209,88,0.15); color: #1f9c46; }
+  .badge-status.pendiente { background: rgba(255,138,61,0.15); color: #d9701f; }
+
+  footer.support {
+    background: linear-gradient(135deg, var(--dark) 0%, var(--dark-2) 100%);
+    color: #fff;
+    padding: 48px 24px;
+    text-align: center;
+    margin-top: 40px;
+  }
+  footer.support img { width: 40px; height: 40px; border-radius: 10px; margin-bottom: 14px; }
+  footer.support h2 { margin: 0 0 8px; font-size: 1.2rem; }
+  footer.support p { color: #b8b8c4; margin: 0 0 18px; font-size: 0.9rem; }
+  footer.support .contact-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  footer.support .contact-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-size: 0.85rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  footer.support .fineprint { margin-top: 24px; font-size: 0.72rem; color: #7c7c8a; }
+
+  table.schema { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 14px 0; }
+  table.schema th, table.schema td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+  table.schema th { color: var(--text-dim); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.03em; }
+</style>
+</head>
+<body>
+
+<header class="manual-header">
+  <img src="assets/logo-mark.png" alt="Code-Reset" />
+  <h1>Manual de Usuario — Medicar</h1>
+  <p>Control financiero del consultorio, paso a paso.</p>
+  <span class="header-badge">CODE-RESET · Software a medida</span>
+</header>
+
+<nav class="toc">
+  <h2>Contenido</h2>
+  <ol>
+    <li><a href="#acceso">Cómo entrar a la app</a></li>
+    <li><a href="#instalar">Instalar como app (PWA)</a></li>
+    <li><a href="#inicio">Módulo Inicio (métricas)</a></li>
+    <li><a href="#ingresos">Módulo Ingresos</a></li>
+    <li><a href="#egresos">Módulo Egresos</a></li>
+    <li><a href="#demo">Modo demo</a></li>
+    <li><a href="#faq">Preguntas frecuentes</a></li>
+  </ol>
+</nav>
+
+<main>
+
+  <section class="block" id="acceso">
+    <h2><span class="section-num">1</span> Cómo entrar a la app</h2>
+    <p class="lead">Medicar es de un solo usuario: tu cuenta ya está creada, no hay registro.</p>
+    <ol class="steps">
+      <li><strong>Abre el enlace de la app</strong><span class="step-detail">El que te compartió Code-Reset (o el ícono en tu pantalla de inicio, si ya la instalaste).</span></li>
+      <li><strong>Toca "Iniciar sesión"</strong><span class="step-detail">En la pantalla de bienvenida.</span></li>
+      <li><strong>Escribe tu correo y contraseña</strong><span class="step-detail">Los que Code-Reset te dio al entregar el proyecto.</span></li>
+      <li><strong>Toca "Entrar"</strong><span class="step-detail">Si tus datos son correctos, verás tu resumen financiero de inmediato.</span></li>
+    </ol>
+    <div class="box box-importante">
+      <strong>Importante</strong>
+      No compartas tu correo y contraseña con nadie. Si crees que alguien más los tiene, avísale a Code-Reset para cambiarlos.
+    </div>
+  </section>
+
+  <section class="block" id="instalar">
+    <h2><span class="section-num">2</span> Instalar como app (PWA)</h2>
+    <p class="lead">Puedes agregar Medicar a tu pantalla de inicio, como cualquier app — sin pasar por la App Store ni Play Store.</p>
+    <div class="card-row">
+      <div class="mini-card">
+        <h3>📱 iPhone (Safari)</h3>
+        <p>Abre la app en Safari → toca el ícono de <strong>Compartir</strong> (el cuadrado con flecha hacia arriba) → <strong>"Agregar a pantalla de inicio"</strong> → Agregar.</p>
+      </div>
+      <div class="mini-card">
+        <h3>🤖 Android (Chrome / Samsung Internet)</h3>
+        <p>Abre la app → toca el menú (⋮) → <strong>"Instalar app"</strong> o <strong>"Agregar a pantalla de inicio"</strong> → Instalar.</p>
+      </div>
+    </div>
+    <div class="box box-nota">
+      <strong>Nota</strong>
+      Una vez instalada, la app abre en pantalla completa, sin la barra del navegador — se siente como cualquier app normal de tu teléfono.
+    </div>
+  </section>
+
+  <section class="block" id="inicio">
+    <h2><span class="section-num">3</span> Módulo Inicio (métricas)</h2>
+    <p class="lead">Tu resumen financiero del mes, de un vistazo.</p>
+    <ol class="steps">
+      <li><strong>Usa las flechas junto al mes</strong><span class="step-detail">Para moverte entre meses anteriores o futuros y ver el resumen de cada uno.</span></li>
+      <li><strong>Revisa las cuatro tarjetas</strong><span class="step-detail">Ingresos del mes, gastos del mes, pagado vs. pendiente, y tu balance final.</span></li>
+      <li><strong>Consulta la comparativa mes a mes</strong><span class="step-detail">La gráfica compara tus ingresos contra tus gastos, mes con mes, desde que empezaste a usar la app.</span></li>
+      <li><strong>Revisa el desglose por categoría</strong><span class="step-detail">Qué categorías de ingresos y de gastos pesan más en el mes.</span></li>
+    </ol>
+    <div class="box box-nota">
+      <strong>Nota</strong>
+      El <em>balance del mes</em> se calcula como ingresos menos <strong>todos</strong> los gastos del mes — los ya pagados y los pendientes. Así ves tu realidad financiera completa, no solo lo que ya saliste a pagar.
+    </div>
+  </section>
+
+  <section class="block" id="ingresos">
+    <h2><span class="section-num">4</span> Módulo Ingresos</h2>
+    <p class="lead">Aquí registras todo lo que entra: honorarios, sueldos, cualquier ingreso.</p>
+    <ol class="steps">
+      <li><strong>Toca el botón "+"</strong><span class="step-detail">Abajo a la derecha, para agregar un ingreso nuevo.</span></li>
+      <li><strong>Llena el formulario</strong><span class="step-detail">Concepto, categoría, monto, fecha en que lo recibiste y forma de recepción (efectivo, depósito...).</span></li>
+      <li><strong>Toca "Agregar"</strong><span class="step-detail">El ingreso aparece de inmediato en tu lista y se suma a las métricas del mes.</span></li>
+      <li><strong>Para editar o eliminar</strong><span class="step-detail">Toca cualquier ingreso de la lista — se abre el mismo formulario con sus datos, listo para modificar o borrar.</span></li>
+    </ol>
+    <table class="schema">
+      <tr><th>Campo</th><th>Qué anotar</th></tr>
+      <tr><td>Concepto</td><td>Ej. "Honorarios consulta médica"</td></tr>
+      <tr><td>Categoría</td><td>Honorarios, Sueldo, Renta... (puedes escribir una nueva)</td></tr>
+      <tr><td>Monto</td><td>Cantidad recibida</td></tr>
+      <tr><td>Fecha de percepción</td><td>Cuándo lo recibiste</td></tr>
+      <tr><td>Forma de recepción</td><td>Efectivo, Depósito, Transferencia...</td></tr>
+    </table>
+  </section>
+
+  <section class="block" id="egresos">
+    <h2><span class="section-num">5</span> Módulo Egresos</h2>
+    <p class="lead">Aquí controlas tus gastos, ordenados por fecha de vencimiento, con su estado de pago.</p>
+    <ol class="steps">
+      <li><strong>Revisa el punto de color</strong><span class="step-detail">Verde = <span class="badge-status pagado">Pagado</span>, naranja = <span class="badge-status pendiente">Pendiente</span>.</span></li>
+      <li><strong>Usa los filtros "Todos / Pendientes / Pagados"</strong><span class="step-detail">Para enfocarte en lo que aún debes pagar este mes.</span></li>
+      <li><strong>Toca el botón "+"</strong><span class="step-detail">Para agregar un gasto nuevo (hipoteca, renta, tarjetas, servicios...).</span></li>
+      <li><strong>Marca el estado</strong><span class="step-detail">Al crear o editar un gasto, elige si ya está "Pagado" o sigue "Pendiente".</span></li>
+      <li><strong>Toca cualquier gasto para editarlo o eliminarlo</strong><span class="step-detail">Por ejemplo, para marcarlo como pagado en cuanto lo liquides.</span></li>
+    </ol>
+    <div class="box box-nota">
+      <strong>Nota</strong>
+      Los gastos se ordenan automáticamente por fecha de vencimiento — el más próximo a vencer siempre aparece primero.
+    </div>
+  </section>
+
+  <section class="block" id="demo">
+    <h2><span class="section-num">6</span> Modo demo</h2>
+    <p class="lead">Si Code-Reset te compartió un enlace con <code>?demo=1</code>, estás viendo una versión de práctica con datos de muestra — no está conectada a tu información real.</p>
+    <div class="box box-importante">
+      <strong>Importante</strong>
+      Los cambios que hagas en el modo demo (agregar, editar, borrar) no se guardan de forma permanente — se pierden al cerrar o recargar la página. Es solo para explorar la app sin riesgo.
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <h2><span class="section-num">7</span> Preguntas frecuentes</h2>
+
+    <details class="faq">
+      <summary>Olvidé mi contraseña, ¿qué hago?</summary>
+      <p>Contacta a Code-Reset (ver abajo) para restablecerla desde la consola de administración.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Puedo usar la app en más de un teléfono?</summary>
+      <p>Sí. Con el mismo correo y contraseña puedes entrar desde cualquier dispositivo — los datos son los mismos en todos, porque viven en la nube (Firebase), no en el teléfono.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Funciona sin internet?</summary>
+      <p>La app abre sin internet gracias a que guarda una copia de su diseño en tu teléfono, pero para ver o guardar tus ingresos y gastos reales necesitas conexión, porque se guardan en la nube.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Puedo pedir un módulo nuevo más adelante?</summary>
+      <p>Sí — la app está diseñada para crecer. Cualquier módulo nuevo (por ejemplo, reportes anuales o recordatorios de pago) se puede agregar sin tocar lo que ya funciona.</p>
+    </details>
+    <details class="faq">
+      <summary>¿Alguien más puede ver mis datos?</summary>
+      <p>No. Las reglas de seguridad de la base de datos están configuradas para que solo tu cuenta pueda leer o escribir tu información.</p>
+    </details>
+  </section>
+
+</main>
+
+<footer class="support">
+  <img src="assets/logo-mark.png" alt="Code-Reset" />
+  <h2>¿Necesitas ayuda?</h2>
+  <p>Escríbele directo a Code-Reset — Ing. Luis Ángel Díaz Bernal.</p>
+  <div class="contact-row">
+    <a class="contact-pill" href="mailto:contacto@code-reset.mx">contacto@code-reset.mx</a>
+    <a class="contact-pill" href="#">WhatsApp de soporte</a>
+  </div>
+  <p class="fineprint">Actualiza estos datos de contacto con los reales de Code-Reset antes de enviar el manual al cliente.<br>Desarrollado por Ing. Luis Ángel Díaz Bernal — Compañía: CODE-RESET.</p>
+</footer>
+
+</body>
+</html>

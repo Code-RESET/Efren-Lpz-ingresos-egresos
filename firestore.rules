@@ -1,0 +1,40 @@
+// ============================================================
+// firestore.rules
+// Cada usuario tiene sus propios datos en users/{uid}/ingresos y
+// users/{uid}/egresos. Solo el dueño autenticado (uid del path ==
+// uid de la sesión) puede leer o escribir su propia subcolección.
+//
+// IMPORTANTE (bug real de NEXORA): ahí existía una función puede()
+// que nunca se invocaba dentro de un `allow`, así que las reglas
+// reales quedaban abiertas y todos terminaban con acceso de admin.
+// Por eso aquí isOwner(uid) se llama EXPLÍCITAMENTE en cada regla
+// de cada colección — no basta con definir la función, hay que
+// usarla. Antes de publicar, probar en el Simulador de reglas de
+// Firebase (Firestore → Reglas → Simulador) con un uid distinto al
+// dueño y confirmar que la lectura/escritura se RECHAZA.
+// ============================================================
+
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+
+      match /ingresos/{ingresoId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      match /egresos/{egresoId} {
+        allow read, write: if isOwner(uid);
+      }
+    }
+
+    // Cualquier otro documento fuera de users/{uid}/... queda
+    // bloqueado por default (no hay `match /{document=**}` abierto).
+  }
+}

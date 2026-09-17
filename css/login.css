@@ -1,0 +1,92 @@
+/* ============================================================
+   login.css — pantalla de acceso
+   ============================================================ */
+
+#login-screen {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background:
+    radial-gradient(ellipse 800px 500px at 50% -10%, rgba(10, 132, 255, 0.14), transparent 60%),
+    var(--bg);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+}
+
+.login-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-dim);
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-bottom: var(--space-5);
+  text-decoration: none;
+}
+
+.login-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  margin: 0 auto var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.login-title {
+  font-size: 1.4rem;
+  margin-bottom: 4px;
+}
+
+.login-subtitle {
+  color: var(--text-dim);
+  font-size: 0.88rem;
+  margin-bottom: var(--space-6);
+}
+
+.login-card form { text-align: left; }
+
+.login-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: rgba(255, 69, 58, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(255, 69, 58, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  margin: var(--space-4) 0 0;
+  text-align: left;
+  animation: fadeInUp var(--dur) var(--ease) both;
+}
+
+.login-submit { margin-top: var(--space-5); }
+
+.login-footer {
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  color: var(--text-faint);
+  line-height: 1.6;
+}
+
+.login-footer strong { color: var(--text-dim); }
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }

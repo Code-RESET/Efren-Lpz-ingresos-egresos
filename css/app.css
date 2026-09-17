@@ -1,0 +1,206 @@
+/* ============================================================
+   app.css — shell de la aplicación (nav + header + content)
+   ============================================================ */
+
+#app-shell {
+  display: flex;
+  min-height: 100dvh;
+}
+
+/* ---------- Sidebar (desktop) ---------- */
+.app-sidebar {
+  width: 232px;
+  flex-shrink: 0;
+  display: none;
+  flex-direction: column;
+  padding: var(--space-5) var(--space-4);
+  border-right: 1px solid var(--border);
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+}
+
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: var(--space-2) var(--space-2) var(--space-6);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.sidebar-brand img { width: 30px; height: 30px; border-radius: 8px; }
+.sidebar-brand small { display: block; color: var(--text-dim); font-weight: 500; font-size: 0.72rem; }
+
+.app-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.app-nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 600;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+
+.app-nav a svg { width: 19px; height: 19px; flex-shrink: 0; }
+
+.app-nav a:hover { background: var(--border); color: var(--text); }
+
+.app-nav a.active {
+  color: var(--accent);
+  background: rgba(10, 132, 255, 0.12);
+}
+
+.sidebar-footer {
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-4);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.user-email {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* ---------- Header mobile ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) var(--space-4) 14px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--blur-bg);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  z-index: 10;
+}
+
+.app-header-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+.app-header-brand img { width: 26px; height: 26px; border-radius: 7px; }
+
+/* ---------- Contenido ---------- */
+.app-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content {
+  padding: var(--space-5) var(--space-4) calc(var(--space-7) + env(safe-area-inset-bottom, 0px));
+  max-width: var(--max-content);
+  margin: 0 auto;
+  width: 100%;
+  flex: 1;
+}
+
+.view-title {
+  font-size: 1.5rem;
+  margin-bottom: var(--space-5);
+}
+
+.view-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+/* ---------- Tab bar (mobile) ---------- */
+.app-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px var(--space-2) calc(env(safe-area-inset-bottom, 0px) + 6px);
+  background: var(--blur-bg);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  z-index: 20;
+}
+
+.app-tabbar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: var(--text-faint);
+  text-decoration: none;
+  font-size: 0.66rem;
+  font-weight: 600;
+  padding: 4px 14px;
+  border-radius: var(--radius-sm);
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.app-tabbar a svg { width: 22px; height: 22px; }
+.app-tabbar a.active { color: var(--accent); }
+
+@media (min-width: 900px) {
+  .app-sidebar { display: flex; }
+  .app-header { display: none; }
+  .app-tabbar { display: none; }
+  .app-content { padding: var(--space-6) var(--space-6) var(--space-7); }
+}
+
+/* ---------- Demo banner ---------- */
+.demo-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, var(--accent-2), #ffb066);
+  color: #1d1d1f;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 8px var(--space-4);
+  text-align: center;
+}

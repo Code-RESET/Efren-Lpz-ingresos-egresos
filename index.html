@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>Medicar — Control financiero</title>
+<meta name="description" content="Control financiero del consultorio Medicar: ingresos, egresos y métricas, siempre claros." />
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)" />
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Medicar" />
+
+<link rel="icon" href="assets/favicon-32.png" />
+<link rel="stylesheet" href="css/tokens.css" />
+<link rel="stylesheet" href="css/base.css" />
+<link rel="stylesheet" href="css/components.css" />
+<link rel="stylesheet" href="css/landing.css" />
+<link rel="stylesheet" href="css/login.css" />
+<link rel="stylesheet" href="css/app.css" />
+<link rel="stylesheet" href="css/dashboard.css" />
+<link rel="stylesheet" href="css/tables.css" />
+<link rel="stylesheet" href="css/demo-tour.css" />
+</head>
+<body>
+
+<div id="toast-root"></div>
+
+<!-- ===================== LANDING ===================== -->
+<section id="landing-screen" class="screen">
+  <nav class="landing-nav">
+    <div class="landing-brand">
+      <img src="assets/logo-mark.png" alt="Medicar" />
+      <span>Medicar</span>
+    </div>
+    <button id="landing-login-btn" class="btn btn-secondary btn-sm">Iniciar sesión</button>
+  </nav>
+
+  <div class="landing-hero">
+    <span class="landing-eyebrow">Control financiero para tu consultorio</span>
+    <h1>Tus <span>ingresos y gastos</span>, siempre claros.</h1>
+    <p>
+      Medicar es la app privada de Efrén López para llevar el control financiero del
+      consultorio y del hogar en un solo lugar: qué entra, qué sale y cuánto queda cada mes.
+    </p>
+    <div class="landing-actions">
+      <button id="landing-login-btn-2" class="btn btn-primary">Iniciar sesión</button>
+      <a href="?demo=1" class="btn btn-secondary">Ver demo</a>
+    </div>
+  </div>
+
+  <div class="landing-features stagger">
+    <div class="feature-card card fade-in-up">
+      <div class="feature-icon" data-icon="dashboard"></div>
+      <h3>Métricas al instante</h3>
+      <p>Balance del mes, comparativa mes a mes y desglose por categoría, sin abrir Excel.</p>
+    </div>
+    <div class="feature-card card fade-in-up">
+      <div class="feature-icon" data-icon="income"></div>
+      <h3>Ingresos ordenados</h3>
+      <p>Honorarios, nómina y cualquier ingreso, con fecha y forma de recepción.</p>
+    </div>
+    <div class="feature-card card fade-in-up">
+      <div class="feature-icon" data-icon="expense"></div>
+      <h3>Gastos bajo control</h3>
+      <p>Pagado o pendiente, ordenado por fecha de vencimiento, para no perder ningún pago.</p>
+    </div>
+  </div>
+
+  <footer class="landing-footer">
+    <p>Desarrollado por: <strong>Ing. Luis Ángel Díaz Bernal</strong> — Compañía: <strong>CODE-RESET</strong></p>
+  </footer>
+</section>
+
+<!-- ===================== LOGIN ===================== -->
+<section id="login-screen" class="screen hidden-screen">
+  <div class="login-card card">
+    <a href="#" id="login-back" class="login-back"><span data-icon="arrowLeft"></span> Volver</a>
+    <img src="assets/logo-mark.png" alt="Code-Reset" class="login-logo" />
+    <h1 class="login-title">Medicar</h1>
+    <p class="login-subtitle">Control financiero del consultorio</p>
+
+    <form id="login-form" novalidate autocomplete="off">
+      <label class="field">
+        <span class="field-label">Correo</span>
+        <input type="email" id="login-email" required autocomplete="username" inputmode="email" />
+        <p class="field-error" id="email-error" hidden></p>
+      </label>
+      <label class="field">
+        <span class="field-label">Contraseña</span>
+        <input type="password" id="login-password" required autocomplete="current-password" minlength="6" />
+        <p class="field-error" id="password-error" hidden></p>
+      </label>
+
+      <p id="login-alert" class="login-alert" hidden></p>
+
+      <button type="submit" id="login-btn" class="btn btn-primary btn-block login-submit" disabled>
+        Entrar
+      </button>
+    </form>
+
+    <footer class="login-footer">
+      <p>Desarrollado por: <strong>Ing. Luis Ángel Díaz Bernal</strong></p>
+      <p>Compañía: <strong>CODE-RESET</strong></p>
+    </footer>
+  </div>
+</section>
+
+<!-- ===================== APP SHELL ===================== -->
+<section id="app-shell" class="screen hidden-screen">
+  <aside class="app-sidebar">
+    <div class="sidebar-brand">
+      <img src="assets/logo-mark.png" alt="Medicar" />
+      <div><span>Medicar</span><small>Code-Reset</small></div>
+    </div>
+
+    <nav id="sidebar-nav" class="app-nav"></nav>
+
+    <div class="sidebar-footer">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <span class="user-email" id="user-email-sidebar"></span>
+      <button id="logout-btn-sidebar" class="btn-icon" title="Salir" aria-label="Salir">
+        <span data-icon="logout"></span>
+      </button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <div id="demo-banner-slot"></div>
+
+    <header class="app-header">
+      <div class="app-header-brand">
+        <img src="assets/logo-mark.png" alt="Medicar" />
+        <span>Medicar</span>
+      </div>
+      <button id="logout-btn-header" class="btn-icon" title="Salir" aria-label="Salir">
+        <span data-icon="logout"></span>
+      </button>
+    </header>
+
+    <main id="app-content" class="app-content"></main>
+
+    <nav id="tabbar-nav" class="app-tabbar"></nav>
+  </div>
+</section>
+
+<div id="tour-root"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script type="module" src="js/app.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').catch((err) => {
+        console.warn('Service worker no registrado:', err);
+      });
+    });
+  }
+</script>
+</body>
+</html>

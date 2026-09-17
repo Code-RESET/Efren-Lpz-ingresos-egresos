@@ -1,0 +1,139 @@
+/* ============================================================
+   dashboard.css — tarjetas de métricas, gráfica y desglose
+   ============================================================ */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.metric-card {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.metric-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.metric-label svg { width: 16px; height: 16px; }
+
+.metric-value {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.metric-sub {
+  font-size: 0.78rem;
+  color: var(--text-faint);
+}
+
+.metric-card.balance-positive .metric-value { color: var(--success); }
+.metric-card.balance-negative .metric-value { color: var(--danger); }
+
+.month-filter {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px;
+  backdrop-filter: blur(12px);
+}
+
+.month-filter button {
+  background: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.month-filter button:hover { background: var(--border); color: var(--text); }
+.month-filter span {
+  font-weight: 700;
+  font-size: 0.86rem;
+  min-width: 132px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.chart-card {
+  padding: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+.chart-card h3 { margin-bottom: var(--space-4); font-size: 1.02rem; }
+
+.chart-wrap {
+  position: relative;
+  height: 260px;
+}
+
+.breakdown-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.breakdown-card { padding: var(--space-5); }
+.breakdown-card h3 { margin-bottom: var(--space-4); font-size: 1.02rem; }
+
+.breakdown-row-wrap {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border);
+}
+.breakdown-row-wrap:last-child { border-bottom: none; }
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 0.86rem;
+}
+
+.breakdown-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.breakdown-name { flex: 1; color: var(--text); font-weight: 600; }
+.breakdown-amount { font-weight: 700; }
+.breakdown-pct { color: var(--text-faint); font-size: 0.76rem; width: 40px; text-align: right; }
+
+.breakdown-bar-track {
+  height: 6px;
+  border-radius: 100px;
+  background: var(--border);
+  overflow: hidden;
+  margin-top: 6px;
+}
+.breakdown-bar-fill {
+  height: 100%;
+  border-radius: 100px;
+  transition: width var(--dur-slow) var(--ease);
+}
+
+@media (min-width: 640px) {
+  .metrics-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (min-width: 900px) {
+  .breakdown-grid { grid-template-columns: 1fr 1fr; }
+}

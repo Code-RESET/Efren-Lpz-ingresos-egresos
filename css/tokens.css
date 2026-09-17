@@ -1,0 +1,94 @@
+/* ============================================================
+   tokens.css — Sistema de diseño Medicar (Code-Reset)
+   Paleta premium tipo Apple, soporta light/dark automático
+   (prefers-color-scheme) + override manual vía [data-theme].
+   Cambiar solo aquí si el cliente pide otros acentos.
+   ============================================================ */
+
+:root {
+  /* Acentos de marca */
+  --accent: #0a84ff;          /* azul sistema — acción primaria */
+  --accent-2: #ff8a3d;        /* naranja Code-Reset — pendiente/aviso */
+  --success: #30d158;         /* pagado / balance positivo */
+  --danger: #ff453a;          /* eliminar / balance negativo */
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+          "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 160ms;
+  --dur: 260ms;
+  --dur-slow: 420ms;
+
+  --max-content: 1080px;
+}
+
+/* ---------- Light (default) ---------- */
+:root,
+:root[data-theme="light"] {
+  --bg: #f5f5f7;
+  --bg-elevated: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.72);
+  --bg-card-solid: #ffffff;
+  --border: rgba(60, 60, 67, 0.12);
+  --border-strong: rgba(60, 60, 67, 0.22);
+  --text: #1d1d1f;
+  --text-dim: #6e6e73;
+  --text-faint: #86868b;
+  --blur-bg: rgba(255, 255, 255, 0.6);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.14), 0 4px 14px rgba(0, 0, 0, 0.06);
+  --skeleton: linear-gradient(90deg, #e9e9ec 25%, #f4f4f6 37%, #e9e9ec 63%);
+}
+
+/* ---------- Dark ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000;
+    --bg-elevated: #1c1c1e;
+    --bg-card: rgba(28, 28, 30, 0.68);
+    --bg-card-solid: #1c1c1e;
+    --border: rgba(255, 255, 255, 0.1);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --text: #f5f5f7;
+    --text-dim: #98989d;
+    --text-faint: #6e6e73;
+    --blur-bg: rgba(0, 0, 0, 0.55);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+    --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+    --skeleton: linear-gradient(90deg, #232325 25%, #2c2c2e 37%, #232325 63%);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #000000;
+  --bg-elevated: #1c1c1e;
+  --bg-card: rgba(28, 28, 30, 0.68);
+  --bg-card-solid: #1c1c1e;
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --text: #f5f5f7;
+  --text-dim: #98989d;
+  --text-faint: #6e6e73;
+  --blur-bg: rgba(0, 0, 0, 0.55);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.55);
+  --skeleton: linear-gradient(90deg, #232325 25%, #2c2c2e 37%, #232325 63%);
+}

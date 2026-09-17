@@ -1,0 +1,321 @@
+/* ============================================================
+   components.css — piezas reutilizables entre módulos
+   ============================================================ */
+
+/* ---------- Botones ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 11px 20px;
+  border-radius: var(--radius-sm);
+  border: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              opacity var(--dur-fast) var(--ease),
+              background var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+
+.btn:active { transform: scale(0.96); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(10, 132, 255, 0.28);
+}
+.btn-primary:hover { opacity: 0.92; }
+
+.btn-secondary {
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+.btn-secondary:hover { background: var(--border); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-dim);
+  border: 1px solid transparent;
+}
+.btn-ghost:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  border: 1px solid rgba(255, 69, 58, 0.35);
+}
+.btn-danger:hover { background: rgba(255, 69, 58, 0.1); }
+
+.btn-icon {
+  padding: 9px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+}
+
+.btn-block { width: 100%; }
+.btn-sm { padding: 7px 14px; font-size: 0.82rem; }
+
+/* ---------- Campos de formulario ---------- */
+.field {
+  display: block;
+  text-align: left;
+}
+
+.field + .field { margin-top: var(--space-4); }
+
+.field-label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-elevated);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.14);
+}
+
+.field input.invalid,
+.field select.invalid {
+  border-color: var(--danger);
+}
+
+.field-hint {
+  margin-top: 5px;
+  font-size: 0.74rem;
+  color: var(--text-faint);
+}
+
+.field-error {
+  margin-top: 5px;
+  font-size: 0.76rem;
+  color: var(--danger);
+}
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--bg-card);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.card-solid {
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---------- Badges de estado ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.badge::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.badge-success { background: rgba(48, 209, 88, 0.14); color: var(--success); }
+.badge-warning { background: rgba(255, 138, 61, 0.16); color: var(--accent-2); }
+.badge-danger  { background: rgba(255, 69, 58, 0.14); color: var(--danger); }
+.badge-neutral { background: var(--border); color: var(--text-dim); }
+
+/* ---------- Skeleton loading ---------- */
+.skeleton {
+  background: var(--skeleton);
+  background-size: 400% 100%;
+  animation: skeleton-shimmer 1.3s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-shimmer {
+  0% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+/* ---------- Entrada de tarjetas / listas ---------- */
+.fade-in-up {
+  animation: fadeInUp var(--dur-slow) var(--ease) both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stagger > * { animation: fadeInUp var(--dur-slow) var(--ease) both; }
+.stagger > *:nth-child(1) { animation-delay: 0ms; }
+.stagger > *:nth-child(2) { animation-delay: 40ms; }
+.stagger > *:nth-child(3) { animation-delay: 80ms; }
+.stagger > *:nth-child(4) { animation-delay: 120ms; }
+.stagger > *:nth-child(5) { animation-delay: 160ms; }
+.stagger > *:nth-child(6) { animation-delay: 200ms; }
+.stagger > *:nth-child(n+7) { animation-delay: 240ms; }
+
+/* ---------- Vista: transición entre rutas ---------- */
+.view-enter {
+  animation: viewFade var(--dur) var(--ease) both;
+}
+
+@keyframes viewFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Modal ---------- */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+  animation: fadeIn var(--dur) var(--ease) both;
+  padding: 0;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.modal-sheet {
+  width: 100%;
+  max-width: 480px;
+  max-height: 92dvh;
+  overflow-y: auto;
+  background: var(--bg-card-solid);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: var(--space-5);
+  box-shadow: var(--shadow-lg);
+  animation: sheetUp var(--dur-slow) var(--ease-spring) both;
+}
+
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+@media (min-width: 640px) {
+  .modal-backdrop { align-items: center; padding: var(--space-5); }
+  .modal-sheet { border-radius: var(--radius-lg); animation: modalPop var(--dur) var(--ease-spring) both; }
+  @keyframes modalPop {
+    from { opacity: 0; transform: scale(0.94) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+
+.modal-title { font-size: 1.15rem; }
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+.modal-actions .btn { flex: 1; }
+
+/* ---------- Toast ---------- */
+#toast-root {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  background: var(--bg-card-solid);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 12px 18px;
+  border-radius: 100px;
+  box-shadow: var(--shadow-lg);
+  font-size: 0.86rem;
+  font-weight: 600;
+  animation: toastIn var(--dur) var(--ease-spring) both;
+  max-width: 420px;
+  text-align: center;
+}
+
+.toast-error { color: var(--danger); }
+.toast-success { color: var(--success); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Estado vacío ---------- */
+.empty-state {
+  text-align: center;
+  padding: var(--space-7) var(--space-4);
+  color: var(--text-dim);
+}
+.empty-state svg { margin: 0 auto var(--space-3); opacity: 0.5; }
+.empty-state h3 { color: var(--text); margin-bottom: 6px; font-size: 1.05rem; }
+.empty-state p { font-size: 0.88rem; max-width: 320px; margin: 0 auto; }
+
+/* ---------- Utilidades ---------- */
+.text-dim { color: var(--text-dim); }
+.text-success { color: var(--success); }
+.text-danger { color: var(--danger); }
+.text-accent { color: var(--accent); }
+.u-flex { display: flex; align-items: center; }
+.u-gap-2 { gap: var(--space-2); }
+.u-gap-3 { gap: var(--space-3); }
+.u-mono { font-family: var(--font-mono); }
