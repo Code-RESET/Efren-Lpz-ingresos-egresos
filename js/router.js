@@ -63,6 +63,19 @@ function renderRoute() {
   content.classList.add("view-enter");
 
   cleanupCurrent = mod.render(content, ctx) || null;
+
+  // .view-enter anima con transform (translateY) y fill-mode "both", así
+  // que ese transform se queda aplicado en #app-content aun después de
+  // terminar la animación. Un elemento con transform activo se vuelve el
+  // "containing block" de sus descendientes position:fixed (ej. el FAB
+  // de Ingresos/Egresos), así que ese botón dejaba de fijarse a la
+  // pantalla y se fijaba al contenido que hace scroll. Se quita la clase
+  // al terminar la animación para no dejar el transform pegado.
+  content.addEventListener(
+    "animationend",
+    () => content.classList.remove("view-enter"),
+    { once: true }
+  );
 }
 
 export function initRouter(routerCtx) {
