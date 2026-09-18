@@ -4,7 +4,7 @@ PWA de control financiero personal de Efrén López (Medicar). Ingresos,
 egresos y métricas, en HTML + CSS + JS puro (sin build step), Firebase
 (Auth + Firestore) y despliegue en GitHub Pages.
 
-Construida sobre [code-reset-boilerplate](https://github.com/anngeldb-del/code-reset-boilerplate).
+Construida sobre [code-reset-boilerplate](https://github.com/Code-RESET/code-reset-boilerplate).
 
 ## 1. Crear el proyecto de Firebase
 
