@@ -18,6 +18,7 @@ import {
   query,
   orderBy,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { showToast } from "../utils/toast.js";
 
 function colRef(uid, name) {
   return collection(db, "users", uid, name);
@@ -27,18 +28,27 @@ function snapshotToRecords(snapshot) {
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
 
+// Sin un callback de error, onSnapshot falla en silencio (solo un log en
+// consola que el usuario final nunca ve): la lista se queda vacía para
+// siempre y se ve idéntica a "no tienes registros todavía". Con esto al
+// menos se avisa que algo falló en vez de fingir que no hay datos.
+function onSnapshotError(err) {
+  console.error("Error de Firestore:", err);
+  showToast("No se pudieron cargar tus datos. Revisa tu conexión.", "error");
+}
+
 export function createFirestoreRepo(uid) {
   return {
     isDemo: false,
 
     subscribeIngresos(callback) {
       const q = query(colRef(uid, "ingresos"), orderBy("fechaPercepcion", "desc"));
-      return onSnapshot(q, (snap) => callback(snapshotToRecords(snap)));
+      return onSnapshot(q, (snap) => callback(snapshotToRecords(snap)), onSnapshotError);
     },
 
     subscribeEgresos(callback) {
       const q = query(colRef(uid, "egresos"), orderBy("fechaVencimiento", "asc"));
-      return onSnapshot(q, (snap) => callback(snapshotToRecords(snap)));
+      return onSnapshot(q, (snap) => callback(snapshotToRecords(snap)), onSnapshotError);
     },
 
     async addIngreso(data) {
