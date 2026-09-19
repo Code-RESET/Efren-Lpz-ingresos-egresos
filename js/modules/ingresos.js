@@ -91,11 +91,13 @@ export function renderIngresos(container, ctx) {
         </label>
         <label class="field">
           <span class="field-label">Monto</span>
-          <input type="number" id="f-monto" required min="0" step="0.01" value="${record ? record.monto : ""}" placeholder="0.00" />
+          <input type="number" id="f-monto" required min="0.01" step="0.01" value="${record ? record.monto : ""}" placeholder="0.00" />
+          <p class="field-error" id="f-monto-error" hidden>Escribe un monto mayor a $0.</p>
         </label>
         <label class="field">
           <span class="field-label">Fecha de percepción</span>
           <input type="date" id="f-fecha" required value="${dateValue}" />
+          <p class="field-error" id="f-fecha-error" hidden>Elige una fecha.</p>
         </label>
         <label class="field">
           <span class="field-label">Forma de recepción</span>
@@ -119,18 +121,38 @@ export function renderIngresos(container, ctx) {
         sheet.querySelector("#modal-close").addEventListener("click", close);
         const form = sheet.querySelector("#ing-form");
 
+        const montoInput = sheet.querySelector("#f-monto");
+        const montoError = sheet.querySelector("#f-monto-error");
+        const fechaInput = sheet.querySelector("#f-fecha");
+        const fechaError = sheet.querySelector("#f-fecha-error");
+        let submitting = false;
+
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
+          if (submitting) return;
+
+          const montoRaw = parseFloat(montoInput.value);
+          const montoValid = Number.isFinite(montoRaw) && montoRaw > 0;
+          const fechaRaw = fechaInput.value;
+          const fechaValida = Boolean(fechaRaw);
+
+          montoError.hidden = montoValid;
+          montoInput.classList.toggle("invalid", !montoValid);
+          fechaError.hidden = fechaValida;
+          fechaInput.classList.toggle("invalid", !fechaValida);
+          if (!montoValid || !fechaValida) return;
+
           const data = {
             concepto: sheet.querySelector("#f-concepto").value.trim(),
             categoria: sheet.querySelector("#f-categoria").value.trim() || "Otro",
-            monto: parseFloat(sheet.querySelector("#f-monto").value) || 0,
-            fechaPercepcion: new Date(`${sheet.querySelector("#f-fecha").value}T00:00:00`),
+            monto: montoRaw,
+            fechaPercepcion: new Date(`${fechaRaw}T00:00:00`),
             formaRecepcion: sheet.querySelector("#f-forma").value.trim() || "Efectivo",
             notas: sheet.querySelector("#f-notas").value.trim(),
           };
-          if (!data.concepto || !data.fechaPercepcion || Number.isNaN(data.monto)) return;
+          if (!data.concepto) return;
 
+          submitting = true;
           try {
             if (isEdit) {
               await repo.updateIngreso(record.id, data);
@@ -142,6 +164,7 @@ export function renderIngresos(container, ctx) {
             close();
           } catch (err) {
             showToast("No se pudo guardar. Intenta de nuevo.", "error");
+            submitting = false;
           }
         });
 

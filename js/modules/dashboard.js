@@ -180,11 +180,30 @@ export function renderDashboard(container, ctx) {
     });
   }
 
-  function paintAll() {
+  function paintMonthDependent() {
     paintMetrics();
     paintBreakdown(breakdownIngEl, ingresos.filter((r) => monthKey(r.fechaPercepcion) === appState.activeMonth), "monto", "Sin ingresos este mes.");
     paintBreakdown(breakdownEgEl, egresos.filter((r) => monthKey(r.fechaVencimiento) === appState.activeMonth), "monto", "Sin gastos este mes.");
+  }
+
+  // La gráfica compara TODOS los meses con datos, no solo el mes activo:
+  // solo hace falta reconstruirla cuando cambian los datos, no al navegar
+  // entre meses con las flechas.
+  function paintAll() {
+    paintMonthDependent();
     if (ingresosReady && egresosReady) paintChart();
+  }
+
+  function recolorChart() {
+    if (!chart) return;
+    const style = getComputedStyle(document.documentElement);
+    const textDim = style.getPropertyValue("--text-dim").trim();
+    const grid = style.getPropertyValue("--border").trim();
+    chart.options.plugins.legend.labels.color = textDim;
+    chart.options.scales.x.ticks.color = textDim;
+    chart.options.scales.y.ticks.color = textDim;
+    chart.options.scales.y.grid.color = grid;
+    chart.update();
   }
 
   container.querySelector("#dash-prev-month").addEventListener("click", () => {
@@ -206,8 +225,9 @@ export function renderDashboard(container, ctx) {
   });
   const unsubState = onStateChange(() => {
     paintMonthLabel();
-    paintAll();
+    paintMonthDependent();
   });
+  document.addEventListener("medicar:theme-change", recolorChart);
 
   paintMonthLabel();
   paintMetrics();
@@ -216,6 +236,7 @@ export function renderDashboard(container, ctx) {
     unsubIngresos();
     unsubEgresos();
     unsubState();
+    document.removeEventListener("medicar:theme-change", recolorChart);
     if (chart) chart.destroy();
   };
 }

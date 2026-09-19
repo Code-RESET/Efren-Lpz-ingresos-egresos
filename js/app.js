@@ -12,13 +12,19 @@
 
 import { icon } from "./utils/icons.js";
 import { initRouter, stopRouter } from "./router.js";
-import { appState } from "./state.js";
+import { appState, setActiveMonth } from "./state.js";
 import { downloadBackup } from "./utils/xlsx-export.js";
 import { initThemeToggle } from "./utils/theme.js";
+import { currentMonthKey } from "./utils/format.js";
 
 let authModPromise = null;
 function loadAuth() {
-  if (!authModPromise) authModPromise = import("./auth.js");
+  if (!authModPromise) {
+    authModPromise = import("./auth.js").catch((err) => {
+      authModPromise = null;
+      throw err;
+    });
+  }
   return authModPromise;
 }
 
@@ -168,6 +174,7 @@ if (!isBlockedByDevice()) {
           stopRouter();
           appState.user = null;
           appState.repo = null;
+          setActiveMonth(currentMonthKey());
           showScreen("landing");
         }
       });

@@ -6,6 +6,11 @@
 // ============================================================
 
 export function openModal(innerHtml, { onMount } = {}) {
+  // Evita modales apilados: un doble-tap en el FAB (u otro botón que
+  // abra un modal) antes de que el primero se monte ya no crea una
+  // segunda hoja encima de la primera.
+  if (document.querySelector(".modal-backdrop")) return null;
+
   const backdrop = document.createElement("div");
   backdrop.className = "modal-backdrop";
   backdrop.innerHTML = `<div class="modal-sheet">${innerHtml}</div>`;

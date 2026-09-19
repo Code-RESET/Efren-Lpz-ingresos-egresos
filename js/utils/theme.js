@@ -44,6 +44,7 @@ function applyTheme(theme) {
   }
   paintToggles(theme);
   paintMetaThemeColor(theme);
+  document.dispatchEvent(new CustomEvent("medicar:theme-change", { detail: { theme } }));
 }
 
 export function initThemeToggle() {

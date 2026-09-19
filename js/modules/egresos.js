@@ -111,11 +111,13 @@ export function renderEgresos(container, ctx) {
         </label>
         <label class="field">
           <span class="field-label">Monto</span>
-          <input type="number" id="f-monto" required min="0" step="0.01" value="${record ? record.monto : ""}" placeholder="0.00" />
+          <input type="number" id="f-monto" required min="0.01" step="0.01" value="${record ? record.monto : ""}" placeholder="0.00" />
+          <p class="field-error" id="f-monto-error" hidden>Escribe un monto mayor a $0.</p>
         </label>
         <label class="field">
           <span class="field-label">Fecha de vencimiento</span>
           <input type="date" id="f-fecha" required value="${dateValue}" />
+          <p class="field-error" id="f-fecha-error" hidden>Elige una fecha.</p>
         </label>
         <label class="field">
           <span class="field-label">Forma de pago</span>
@@ -155,22 +157,41 @@ export function renderEgresos(container, ctx) {
         });
 
         const form = sheet.querySelector("#eg-form");
+        const montoInput = sheet.querySelector("#f-monto");
+        const montoError = sheet.querySelector("#f-monto-error");
+        const fechaInput = sheet.querySelector("#f-fecha");
+        const fechaError = sheet.querySelector("#f-fecha-error");
+        let submitting = false;
+
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
-          const fechaVal = sheet.querySelector("#f-fecha").value;
-          const fechaVencimiento = new Date(`${fechaVal}T00:00:00`);
+          if (submitting) return;
+
+          const montoRaw = parseFloat(montoInput.value);
+          const montoValid = Number.isFinite(montoRaw) && montoRaw > 0;
+          const fechaRaw = fechaInput.value;
+          const fechaValida = Boolean(fechaRaw);
+
+          montoError.hidden = montoValid;
+          montoInput.classList.toggle("invalid", !montoValid);
+          fechaError.hidden = fechaValida;
+          fechaInput.classList.toggle("invalid", !fechaValida);
+          if (!montoValid || !fechaValida) return;
+
+          const fechaVencimiento = new Date(`${fechaRaw}T00:00:00`);
           const data = {
             gasto: sheet.querySelector("#f-gasto").value.trim(),
             categoria: sheet.querySelector("#f-categoria").value.trim() || "Otro",
-            monto: parseFloat(sheet.querySelector("#f-monto").value) || 0,
+            monto: montoRaw,
             diaVencimiento: fechaVencimiento.getDate(),
             fechaVencimiento,
             formaPago: sheet.querySelector("#f-forma").value.trim() || "Efectivo",
             estado: estadoValue,
             notas: sheet.querySelector("#f-notas").value.trim(),
           };
-          if (!data.gasto || Number.isNaN(data.monto)) return;
+          if (!data.gasto) return;
 
+          submitting = true;
           try {
             if (isEdit) {
               await repo.updateEgreso(record.id, data);
@@ -182,6 +203,7 @@ export function renderEgresos(container, ctx) {
             close();
           } catch (err) {
             showToast("No se pudo guardar. Intenta de nuevo.", "error");
+            submitting = false;
           }
         });
 

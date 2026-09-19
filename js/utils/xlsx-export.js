@@ -16,10 +16,26 @@ import { showToast } from "./toast.js";
 
 function snapshotOnce(subscribeFn) {
   return new Promise((resolve) => {
-    const unsubscribe = subscribeFn((records) => {
+    let unsubscribe = null;
+    let readyToStop = false;
+    let resolved = false;
+
+    const stop = () => {
+      readyToStop = true;
+      unsubscribe?.();
+    };
+
+    unsubscribe = subscribeFn((records) => {
+      if (resolved) return;
+      resolved = true;
       resolve(records);
-      unsubscribe();
+      // Si subscribeFn llama a este callback de forma síncrona (antes de
+      // que termine de asignar `unsubscribe` arriba), esperamos a que esa
+      // asignación exista para no invocar undefined.
+      if (unsubscribe) stop();
     });
+
+    if (resolved && !readyToStop) stop();
   });
 }
 
