@@ -53,6 +53,20 @@ svg { width: 20px; height: 20px; flex-shrink: 0; }
   display: none !important;
 }
 
+/* ---------- Solo celular ----------
+   [data-device-ok="0"] lo pone el script inline de index.html ANTES
+   del primer paint (igual que el tema). En tablet/escritorio, oculta
+   todo menos la pantalla de aviso — el resto de la app (Firebase,
+   router, etc.) ni siquiera se llega a inicializar, ver js/app.js. */
+:root[data-device-ok="0"] #landing-screen,
+:root[data-device-ok="0"] #login-screen,
+:root[data-device-ok="0"] #app-shell {
+  display: none !important;
+}
+:root[data-device-ok="0"] #desktop-block-screen {
+  display: flex !important;
+}
+
 /* Scrollbar discreto (webkit) */
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-thumb {

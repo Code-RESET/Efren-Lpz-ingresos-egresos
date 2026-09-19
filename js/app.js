@@ -148,22 +148,43 @@ function enterApp(user, repo) {
   initRouter({ user, repo });
 }
 
-loadAuth()
-  .then(({ watchAuthState }) => {
-    watchAuthState((user) => {
-      if (user) {
-        import("./data/firestore-repo.js").then(({ createFirestoreRepo }) => {
-          enterApp(user, createFirestoreRepo(user.uid));
-        });
-      } else {
-        stopRouter();
-        appState.user = null;
-        appState.repo = null;
-        showScreen("landing");
-      }
+// ---------- Solo celular ----------
+// El <html data-device-ok> ya lo puso el script inline de index.html
+// antes del primer paint (evita el parpadeo). Si está bloqueado, ni
+// siquiera cargamos Firebase — no hace falta en una pantalla de aviso.
+function isBlockedByDevice() {
+  return document.documentElement.dataset.deviceOk === "0";
+}
+
+if (!isBlockedByDevice()) {
+  loadAuth()
+    .then(({ watchAuthState }) => {
+      watchAuthState((user) => {
+        if (user) {
+          import("./data/firestore-repo.js").then(({ createFirestoreRepo }) => {
+            enterApp(user, createFirestoreRepo(user.uid));
+          });
+        } else {
+          stopRouter();
+          appState.user = null;
+          appState.repo = null;
+          showScreen("landing");
+        }
+      });
+    })
+    .catch((err) => {
+      console.error("No se pudo cargar Firebase:", err);
+      showScreen("landing");
     });
-  })
-  .catch((err) => {
-    console.error("No se pudo cargar Firebase:", err);
-    showScreen("landing");
-  });
+}
+
+// Recalcula si cambia el tamaño de ventana (ej. alguien prueba
+// redimensionando en escritorio). Recargar es más simple y seguro
+// que tratar de arrancar/desarmar el flujo de auth a medio camino.
+let deviceGateBlockedAtLoad = isBlockedByDevice();
+window.addEventListener("resize", () => {
+  const small = Math.min(window.innerWidth, window.innerHeight);
+  const touch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  const blockedNow = !(touch && small <= 480);
+  if (blockedNow !== deviceGateBlockedAtLoad) location.reload();
+});

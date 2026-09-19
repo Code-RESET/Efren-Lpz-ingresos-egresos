@@ -17,6 +17,22 @@
   })();
 </script>
 
+<!-- Medicar es solo para celular: se decide ANTES del primer paint
+     (como el tema) para no mostrar ni un parpadeo de la app en
+     tablet/escritorio. Ver css/base.css [data-device-ok] y
+     js/app.js (revisa de nuevo si cambia el tamaño de ventana). -->
+<script>
+  (function () {
+    try {
+      var small = Math.min(window.innerWidth, window.innerHeight);
+      var touch = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+      document.documentElement.dataset.deviceOk = touch && small <= 480 ? "1" : "0";
+    } catch (e) {
+      document.documentElement.dataset.deviceOk = "1";
+    }
+  })();
+</script>
+
 <!-- PWA -->
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
@@ -39,6 +55,16 @@
 <body>
 
 <div id="toast-root"></div>
+
+<!-- ===================== SOLO CELULAR ===================== -->
+<section id="desktop-block-screen" class="screen hidden-screen">
+  <div class="device-block-card card">
+    <img src="assets/logo-mark.png" alt="Medicar" class="device-block-logo" />
+    <div class="device-block-icon" data-icon="smartphone"></div>
+    <h1>Disponible solo en tu celular</h1>
+    <p>Medicar está pensado para usarse desde tu teléfono. Ábrelo ahí para entrar a tu cuenta.</p>
+  </div>
+</section>
 
 <!-- ===================== LANDING ===================== -->
 <section id="landing-screen" class="screen">

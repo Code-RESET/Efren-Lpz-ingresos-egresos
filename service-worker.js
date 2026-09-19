@@ -9,7 +9,7 @@
 // instalados.
 // ============================================================
 
-const CACHE_VERSION = "medicar-v5";
+const CACHE_VERSION = "medicar-v6";
 const CORE_ASSETS = [
   "./",
   "./index.html",
