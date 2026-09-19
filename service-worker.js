@@ -9,7 +9,7 @@
 // instalados.
 // ============================================================
 
-const CACHE_VERSION = "medicar-v4";
+const CACHE_VERSION = "medicar-v5";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -22,15 +22,12 @@ const CORE_ASSETS = [
   "./css/app.css",
   "./css/dashboard.css",
   "./css/tables.css",
-  "./css/demo-tour.css",
   "./js/app.js",
   "./js/auth.js",
   "./js/router.js",
   "./js/state.js",
   "./js/firebase-config.js",
   "./js/data/firestore-repo.js",
-  "./js/data/demo-repo.js",
-  "./js/data/demo-data.js",
   "./js/utils/format.js",
   "./js/utils/icons.js",
   "./js/utils/modal.js",
@@ -40,7 +37,6 @@ const CORE_ASSETS = [
   "./js/modules/dashboard.js",
   "./js/modules/ingresos.js",
   "./js/modules/egresos.js",
-  "./js/modules/demo-tour.js",
   "./assets/logo-mark.png",
   "./assets/code-reset-badge.png",
   "./assets/icon-192.png",

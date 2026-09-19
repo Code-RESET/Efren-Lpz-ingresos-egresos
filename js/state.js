@@ -1,8 +1,8 @@
 // ============================================================
 // state.js
-// Estado compartido mínimo entre módulos: modo demo, mes activo
-// del filtro y el repo de datos vigente (Firestore o memoria).
-// Un pub/sub simple — sin librerías externas.
+// Estado compartido mínimo entre módulos: mes activo del filtro y
+// el repo de datos vigente. Un pub/sub simple — sin librerías
+// externas.
 // ============================================================
 
 import { currentMonthKey } from "./utils/format.js";
@@ -10,7 +10,6 @@ import { currentMonthKey } from "./utils/format.js";
 const listeners = new Set();
 
 export const appState = {
-  isDemoMode: new URLSearchParams(location.search).get("demo") === "1",
   user: null,
   repo: null,
   activeMonth: currentMonthKey(),

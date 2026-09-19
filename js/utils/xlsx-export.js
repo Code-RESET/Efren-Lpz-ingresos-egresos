@@ -1,7 +1,7 @@
 // ============================================================
 // utils/xlsx-export.js
 // Respaldo directo en Excel: junta ingresos + egresos del repo
-// activo (Firestore o demo) y genera un .xlsx descargable con la
+// activo y genera un .xlsx descargable con la
 // misma estructura de hojas que la plantilla original de Excel del
 // cliente ("Gastos del Mes", "Ingresos", "Balance"), para que sirva
 // como respaldo real y sea familiar si algún día lo abre a mano.

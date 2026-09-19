@@ -8,11 +8,6 @@
 // Se deja embebido directo en el código (no solo en localStorage)
 // porque en HD Crédit se detectó que localStorage se puede perder
 // con actualizaciones del sistema operativo del teléfono.
-//
-// En modo demo (?demo=1) este archivo NO se usa: app.js carga el
-// repo en memoria de js/data/demo-repo.js y Firebase nunca se
-// inicializa, así que el demo funciona sin conexión ni proyecto
-// real configurado.
 // ============================================================
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";

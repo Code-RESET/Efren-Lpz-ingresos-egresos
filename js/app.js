@@ -2,19 +2,17 @@
 // app.js
 // Punto de entrada: decide qué pantalla mostrar (landing, login
 // o app-shell), maneja el formulario de login con validación en
-// vivo, logout y el arranque del modo demo.
+// vivo y logout.
 //
 // auth.js y data/firestore-repo.js (y con ellos el SDK de Firebase
-// vía CDN) se importan de forma DINÁMICA y solo fuera del modo
-// demo: así ?demo=1 nunca depende de que Firebase cargue, tal como
-// pide el spec ("SIN conexión a Firebase real").
+// vía CDN) se importan de forma DINÁMICA, solo cuando hacen falta
+// (al enviar el login, o al detectar sesión activa), para no
+// bloquear la carga inicial de la landing con el SDK de Firebase.
 // ============================================================
 
 import { icon } from "./utils/icons.js";
 import { initRouter, stopRouter } from "./router.js";
-import { createDemoRepo } from "./data/demo-repo.js";
 import { appState } from "./state.js";
-import { maybeStartTour, restartTour } from "./modules/demo-tour.js";
 import { downloadBackup } from "./utils/xlsx-export.js";
 import { initThemeToggle } from "./utils/theme.js";
 
@@ -121,10 +119,6 @@ document.getElementById("login-back")?.addEventListener("click", (e) => {
 
 // ---------- Logout ----------
 async function handleLogout() {
-  if (appState.isDemoMode) {
-    location.href = location.pathname;
-    return;
-  }
   const { logout } = await loadAuth();
   await logout();
 }
@@ -145,54 +139,31 @@ function paintUser(user) {
   document.getElementById("user-avatar").textContent = email.charAt(0).toUpperCase() || "?";
 }
 
-function paintDemoBanner() {
-  const slot = document.getElementById("demo-banner-slot");
-  if (!appState.isDemoMode) {
-    slot.innerHTML = "";
-    return;
-  }
-  slot.innerHTML = `
-    <div class="demo-banner">
-      Estás viendo una demo con datos de muestra
-      <button type="button" id="demo-replay-tour" style="all:unset; cursor:pointer; text-decoration:underline; margin-left:4px;">Ver tour</button>
-      ·
-      <a href="${location.pathname}" style="color:inherit; text-decoration:underline; margin-left:4px;">Salir del demo</a>
-    </div>`;
-  slot.querySelector("#demo-replay-tour")?.addEventListener("click", restartTour);
-}
-
-// ---------- Arranque de la app autenticada / demo ----------
+// ---------- Arranque de la app autenticada ----------
 function enterApp(user, repo) {
   appState.user = user;
   appState.repo = repo;
   paintUser(user);
-  paintDemoBanner();
   showScreen("app");
-  initRouter({ user, repo, isDemoMode: appState.isDemoMode });
-  if (appState.isDemoMode) maybeStartTour();
+  initRouter({ user, repo });
 }
 
-if (appState.isDemoMode) {
-  const demoUser = { email: "demo@medicar.app", uid: "demo" };
-  enterApp(demoUser, createDemoRepo());
-} else {
-  loadAuth()
-    .then(({ watchAuthState }) => {
-      watchAuthState((user) => {
-        if (user) {
-          import("./data/firestore-repo.js").then(({ createFirestoreRepo }) => {
-            enterApp(user, createFirestoreRepo(user.uid));
-          });
-        } else {
-          stopRouter();
-          appState.user = null;
-          appState.repo = null;
-          showScreen("landing");
-        }
-      });
-    })
-    .catch((err) => {
-      console.error("No se pudo cargar Firebase:", err);
-      showScreen("landing");
+loadAuth()
+  .then(({ watchAuthState }) => {
+    watchAuthState((user) => {
+      if (user) {
+        import("./data/firestore-repo.js").then(({ createFirestoreRepo }) => {
+          enterApp(user, createFirestoreRepo(user.uid));
+        });
+      } else {
+        stopRouter();
+        appState.user = null;
+        appState.repo = null;
+        showScreen("landing");
+      }
     });
-}
+  })
+  .catch((err) => {
+    console.error("No se pudo cargar Firebase:", err);
+    showScreen("landing");
+  });

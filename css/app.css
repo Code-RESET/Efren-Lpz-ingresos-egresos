@@ -215,17 +215,3 @@
   .app-tabbar { display: none; }
   .app-content { padding: var(--space-6) var(--space-6) var(--space-7); }
 }
-
-/* ---------- Demo banner ---------- */
-.demo-banner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: linear-gradient(90deg, var(--accent-2), #ffb066);
-  color: #1d1d1f;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 8px var(--space-4);
-  text-align: center;
-}

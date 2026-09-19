@@ -53,8 +53,7 @@ python3 -m http.server 8080
 # o: npx serve .
 ```
 
-Abre `http://localhost:8080`. Para ver la demo sin tocar Firebase:
-`http://localhost:8080/?demo=1`.
+Abre `http://localhost:8080`.
 
 ## 4. Publicar en GitHub Pages
 
@@ -71,36 +70,23 @@ afectan a todas las vistas, `js/app.js`, `js/router.js`), sube el número en
 `CACHE_VERSION` dentro de [`service-worker.js`](service-worker.js) para que los
 teléfonos que ya instalaron la PWA jalen la versión nueva.
 
-## 5. Modo demo
-
-`?demo=1` (por ejemplo `https://tu-dominio/?demo=1`) carga datos de muestra en
-memoria — el mes real de septiembre 2026 de la plantilla de Excel de Efrén — sin
-conectarse a Firebase en absoluto. Es lo que le mandas al cliente como preview de
-venta: entra directo a la app con un tour guiado la primera vez. Los cambios que
-se hagan en modo demo (altas/ediciones/borrados) solo viven en esa sesión del
-navegador; al recargar vuelve a los datos originales de
-[`js/data/demo-data.js`](js/data/demo-data.js).
-
 ## Estructura del proyecto
 
 ```
 index.html          Landing + login + shell de la app (una sola página)
 css/                 Sistema de diseño (tokens, base, componentes) + por vista
 js/
-  app.js             Arranque: decide pantalla, login, logout, modo demo
-  auth.js             Solo autenticación (se carga solo si NO es modo demo)
+  app.js             Arranque: decide pantalla, login, logout
+  auth.js             Solo autenticación (se carga de forma dinámica)
   router.js           Router por hash, registro de módulos
-  state.js             Estado compartido mínimo (mes activo, modo demo)
+  state.js             Estado compartido mínimo (mes activo, repo activo)
   firebase-config.js  Config de Firebase — EDITAR con las credenciales reales
   data/
     firestore-repo.js Acceso real a Firestore (users/{uid}/ingresos|egresos)
-    demo-repo.js       Mismo "contrato" que firestore-repo, pero en memoria
-    demo-data.js       Datos de muestra (Excel real de Efrén, sept. 2026)
   modules/
     dashboard.js       Métricas, comparativa mes a mes (Chart.js), desglose
     ingresos.js         Alta/edición/borrado/filtro de ingresos
     egresos.js           Alta/edición/borrado/filtro de egresos, Pagado/Pendiente
-    demo-tour.js         Tour guiado del modo demo
   utils/                Formato de moneda/fecha, iconos SVG, toasts, modal
 manifest.json        PWA
 service-worker.js    Cache del shell (subir CACHE_VERSION al tocar archivos base)
@@ -113,7 +99,7 @@ manual-de-usuario.html  Manual para el cliente (identidad Code-Reset)
 1. Copia `js/modules/dashboard.js` (o `ingresos.js` si el módulo nuevo es una
    lista con alta/edición/borrado) y renómbralo.
 2. Escribe su `render(container, ctx)` — recibe el contenedor y
-   `{ user, repo, isDemoMode }`; puede devolver una función de limpieza.
+   `{ user, repo }`; puede devolver una función de limpieza.
 3. Regístralo en el arreglo `MODULES` de `js/router.js`.
 4. Si necesita su propio CSS, agrega el archivo en `css/` y enlázalo en
    `index.html`.

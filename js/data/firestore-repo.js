@@ -5,10 +5,6 @@
 // users/{uid}/egresos — así las reglas de seguridad solo
 // necesitan comparar el uid del path, sin depender de que cada
 // query recuerde filtrar por dueño (ver firestore.rules).
-//
-// Expone la misma interfaz que data/demo-repo.js para que los
-// módulos (dashboard/ingresos/egresos) no sepan ni les importe
-// si están en modo demo o conectados a Firebase real.
 // ============================================================
 
 import { db } from "../firebase-config.js";
