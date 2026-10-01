@@ -51,6 +51,18 @@ export function shiftMonthKey(monthKeyStr, delta) {
   return monthKey(d);
 }
 
+// Mueve una fecha al mismo día del mes de destino, sin desbordarse al mes
+// siguiente cuando ese día no existe ahí (ej. 31 de enero -> 28/29 de
+// febrero, no marzo). Se usa para "duplicar mes anterior".
+export function shiftDateToMonth(date, targetMonthKeyStr) {
+  const d = toDate(date);
+  if (!d) return null;
+  const [year, month] = targetMonthKeyStr.split("-").map(Number);
+  const lastDayOfTargetMonth = new Date(year, month, 0).getDate();
+  const day = Math.min(d.getDate(), lastDayOfTargetMonth);
+  return new Date(year, month - 1, day);
+}
+
 export function currentMonthKey() {
   return monthKey(new Date());
 }

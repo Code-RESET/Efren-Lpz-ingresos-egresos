@@ -16,6 +16,8 @@ import { appState, setActiveMonth } from "./state.js";
 import { downloadBackup } from "./utils/xlsx-export.js";
 import { initThemeToggle } from "./utils/theme.js";
 import { currentMonthKey } from "./utils/format.js";
+import { showToast } from "./utils/toast.js";
+import { APP_VERSION } from "./utils/version.js";
 
 let authModPromise = null;
 function loadAuth() {
@@ -34,6 +36,10 @@ document.querySelectorAll("[data-icon]").forEach((el) => {
 });
 
 initThemeToggle();
+
+// ---------- Versión visible ----------
+document.getElementById("app-version-header").textContent = `v${APP_VERSION}`;
+document.getElementById("app-version-sidebar").textContent = `v${APP_VERSION}`;
 
 const screens = {
   landing: document.getElementById("landing-screen"),
@@ -137,6 +143,30 @@ function handleBackup() {
 }
 document.getElementById("backup-btn-sidebar")?.addEventListener("click", handleBackup);
 document.getElementById("backup-btn-header")?.addEventListener("click", handleBackup);
+
+// ---------- Buscar actualización ----------
+// El service worker ya usa skipWaiting()/clients.claim() (ver
+// service-worker.js), así que en cuanto haya una versión nueva
+// instalada basta con recargar para que tome control. reg.update()
+// fuerza a que el navegador revise ahora mismo en vez de esperar a su
+// chequeo automático (que puede tardar hasta 24h).
+async function checkForUpdate() {
+  if (!("serviceWorker" in navigator)) {
+    location.reload();
+    return;
+  }
+  showToast("Buscando actualizaciones…");
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (reg) await reg.update();
+  } catch (err) {
+    // Aun si falla la revisión, recargamos: si ya había una versión
+    // nueva instalada de una revisión anterior, esto la activa igual.
+  }
+  setTimeout(() => location.reload(), 600);
+}
+document.getElementById("update-btn-sidebar")?.addEventListener("click", checkForUpdate);
+document.getElementById("update-btn-header")?.addEventListener("click", checkForUpdate);
 
 // ---------- Identidad del usuario en el sidebar ----------
 function paintUser(user) {

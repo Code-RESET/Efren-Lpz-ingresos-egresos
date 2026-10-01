@@ -6,7 +6,7 @@
 // Ordenado por fecha de vencimiento.
 // ============================================================
 
-import { formatCurrency, formatDate, monthKey, monthLabel, shiftMonthKey, daysUntil, toDate } from "../utils/format.js";
+import { formatCurrency, formatDate, monthKey, monthLabel, shiftMonthKey, shiftDateToMonth, daysUntil, toDate } from "../utils/format.js";
 import { icon } from "../utils/icons.js";
 import { openModal } from "../utils/modal.js";
 import { showToast } from "../utils/toast.js";
@@ -19,6 +19,7 @@ export function renderEgresos(container, ctx) {
   const { repo } = ctx;
   let allRecords = [];
   let statusFilter = "todos"; // todos | pagado | pendiente
+  let duplicating = false;
 
   container.innerHTML = `
     <div class="view-header">
@@ -35,6 +36,7 @@ export function renderEgresos(container, ctx) {
         <button type="button" data-value="pendiente">Pendientes</button>
         <button type="button" data-value="pagado">Pagados</button>
       </div>
+      <button type="button" id="eg-duplicate" class="btn btn-secondary btn-sm">${icon("copy")} Duplicar mes anterior</button>
     </div>
     <div id="eg-list" class="record-list stagger"></div>
     <button type="button" class="fab" id="eg-fab" aria-label="Agregar egreso">${icon("plus")}</button>
@@ -43,6 +45,7 @@ export function renderEgresos(container, ctx) {
   const listEl = container.querySelector("#eg-list");
   const monthLabelEl = container.querySelector("#eg-month-label");
   const filterEl = container.querySelector("#eg-filter");
+  const duplicateBtn = container.querySelector("#eg-duplicate");
 
   function paintMonthLabel() {
     monthLabelEl.textContent = monthLabel(appState.activeMonth);
@@ -221,6 +224,50 @@ export function renderEgresos(container, ctx) {
       },
     });
   }
+
+  async function duplicatePrevMonth() {
+    if (duplicating) return;
+
+    const prevMonth = shiftMonthKey(appState.activeMonth, -1);
+    const prevRecords = allRecords.filter((r) => monthKey(r.fechaVencimiento) === prevMonth);
+
+    if (prevRecords.length === 0) {
+      showToast(`No hay egresos en ${monthLabel(prevMonth)} para duplicar.`);
+      return;
+    }
+
+    const plural = prevRecords.length === 1 ? "" : "s";
+    const confirmMsg = `¿Duplicar ${prevRecords.length} egreso${plural} de ${monthLabel(prevMonth)} a ${monthLabel(appState.activeMonth)}? Se marcarán como Pendientes.`;
+    if (!confirm(confirmMsg)) return;
+
+    duplicating = true;
+    duplicateBtn.disabled = true;
+    try {
+      await Promise.all(
+        prevRecords.map((r) => {
+          const fechaVencimiento = shiftDateToMonth(r.fechaVencimiento, appState.activeMonth);
+          return repo.addEgreso({
+            gasto: r.gasto,
+            categoria: r.categoria,
+            monto: r.monto,
+            diaVencimiento: fechaVencimiento.getDate(),
+            fechaVencimiento,
+            formaPago: r.formaPago,
+            estado: "Pendiente",
+            notas: r.notas,
+          });
+        })
+      );
+      showToast(`${prevRecords.length} egreso${plural} duplicado${plural}`, "success");
+    } catch (err) {
+      showToast("No se pudo duplicar. Intenta de nuevo.", "error");
+    } finally {
+      duplicating = false;
+      duplicateBtn.disabled = false;
+    }
+  }
+
+  duplicateBtn.addEventListener("click", duplicatePrevMonth);
 
   container.querySelector("#eg-fab").addEventListener("click", () => openForm(null));
   listEl.addEventListener("click", (e) => {

@@ -160,13 +160,16 @@
   <aside class="app-sidebar">
     <div class="sidebar-brand">
       <img src="assets/logo-mark.png" alt="Medicar" />
-      <div><span>Medicar</span><small>Code-Reset</small></div>
+      <div><span>Medicar</span><small>Code-Reset · <span id="app-version-sidebar"></span></small></div>
     </div>
 
     <nav id="sidebar-nav" class="app-nav"></nav>
 
     <button type="button" id="backup-btn-sidebar" class="sidebar-action-btn">
       <span data-icon="download"></span><span>Descargar respaldo</span>
+    </button>
+    <button type="button" id="update-btn-sidebar" class="sidebar-action-btn">
+      <span data-icon="refresh"></span><span>Buscar actualización</span>
     </button>
     <button type="button" id="theme-toggle-sidebar" class="sidebar-action-btn" data-theme-toggle>
       <span class="theme-toggle-icon"></span><span class="theme-toggle-label">Modo oscuro</span>
@@ -186,6 +189,7 @@
       <div class="app-header-brand">
         <img src="assets/logo-mark.png" alt="Medicar" />
         <span>Medicar</span>
+        <span class="app-version" id="app-version-header"></span>
       </div>
       <div class="header-actions">
         <button type="button" class="btn-icon" data-theme-toggle aria-label="Cambiar tema" title="Cambiar tema">
@@ -193,6 +197,9 @@
         </button>
         <button id="backup-btn-header" class="btn-icon" title="Descargar respaldo" aria-label="Descargar respaldo">
           <span data-icon="download"></span>
+        </button>
+        <button id="update-btn-header" class="btn-icon" title="Buscar actualización" aria-label="Buscar actualización">
+          <span data-icon="refresh"></span>
         </button>
         <button id="logout-btn-header" class="btn-icon" title="Salir" aria-label="Salir">
           <span data-icon="logout"></span>

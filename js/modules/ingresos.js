@@ -5,7 +5,7 @@
 // formaRecepcion, notas.
 // ============================================================
 
-import { formatCurrency, formatDate, monthKey, monthLabel, shiftMonthKey, toDate } from "../utils/format.js";
+import { formatCurrency, formatDate, monthKey, monthLabel, shiftMonthKey, shiftDateToMonth, toDate } from "../utils/format.js";
 import { icon } from "../utils/icons.js";
 import { openModal } from "../utils/modal.js";
 import { showToast } from "../utils/toast.js";
@@ -17,6 +17,7 @@ const FORMAS = ["Efectivo", "Depósito", "Transferencia"];
 export function renderIngresos(container, ctx) {
   const { repo } = ctx;
   let allRecords = [];
+  let duplicating = false;
 
   container.innerHTML = `
     <div class="view-header">
@@ -27,12 +28,16 @@ export function renderIngresos(container, ctx) {
         <button type="button" id="ing-next-month" aria-label="Mes siguiente">${icon("chevronRight")}</button>
       </div>
     </div>
+    <div class="list-toolbar">
+      <button type="button" id="ing-duplicate" class="btn btn-secondary btn-sm">${icon("copy")} Duplicar mes anterior</button>
+    </div>
     <div id="ing-list" class="record-list stagger"></div>
     <button type="button" class="fab" id="ing-fab" aria-label="Agregar ingreso">${icon("plus")}</button>
   `;
 
   const listEl = container.querySelector("#ing-list");
   const monthLabelEl = container.querySelector("#ing-month-label");
+  const duplicateBtn = container.querySelector("#ing-duplicate");
 
   function paintMonthLabel() {
     monthLabelEl.textContent = monthLabel(appState.activeMonth);
@@ -182,6 +187,47 @@ export function renderIngresos(container, ctx) {
       },
     });
   }
+
+  async function duplicatePrevMonth() {
+    if (duplicating) return;
+
+    const prevMonth = shiftMonthKey(appState.activeMonth, -1);
+    const prevRecords = allRecords.filter((r) => monthKey(r.fechaPercepcion) === prevMonth);
+
+    if (prevRecords.length === 0) {
+      showToast(`No hay ingresos en ${monthLabel(prevMonth)} para duplicar.`);
+      return;
+    }
+
+    const plural = prevRecords.length === 1 ? "" : "s";
+    const confirmMsg = `¿Duplicar ${prevRecords.length} ingreso${plural} de ${monthLabel(prevMonth)} a ${monthLabel(appState.activeMonth)}?`;
+    if (!confirm(confirmMsg)) return;
+
+    duplicating = true;
+    duplicateBtn.disabled = true;
+    try {
+      await Promise.all(
+        prevRecords.map((r) =>
+          repo.addIngreso({
+            concepto: r.concepto,
+            categoria: r.categoria,
+            monto: r.monto,
+            fechaPercepcion: shiftDateToMonth(r.fechaPercepcion, appState.activeMonth),
+            formaRecepcion: r.formaRecepcion,
+            notas: r.notas,
+          })
+        )
+      );
+      showToast(`${prevRecords.length} ingreso${plural} duplicado${plural}`, "success");
+    } catch (err) {
+      showToast("No se pudo duplicar. Intenta de nuevo.", "error");
+    } finally {
+      duplicating = false;
+      duplicateBtn.disabled = false;
+    }
+  }
+
+  duplicateBtn.addEventListener("click", duplicatePrevMonth);
 
   container.querySelector("#ing-fab").addEventListener("click", () => openForm(null));
   listEl.addEventListener("click", (e) => {
